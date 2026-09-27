@@ -96,6 +96,6 @@ function logout(){
     localStorage.removeItem("token");
     localStorage.removeItem("username");
 
-    location.reload();
+    window.location.href = "/login.html";
 
 }
