@@ -59,24 +59,14 @@ async function loadProfile(){
         await response.json();
 
     const avatarUrl =
-        user.avatar ||
-        `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || "Utilisateur")}&background=random`;
+        user.avatar && user.avatar.trim() !== ""
+            ? user.avatar
+            : `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || "Utilisateur")}&background=random`;
 
-    document.getElementById(
-        "profile"
-    ).innerHTML = `
-
-        <img
-        src="${avatarUrl}"
-        alt="${(user.username || "Utilisateur").replace(/"/g, "&quot;")}"
-        class="avatar-large">
-
+    document.getElementById("profile").innerHTML = `
+        <img src="${avatarUrl}" alt="${user.username || "Utilisateur"}">
         <h2>${user.username}</h2>
-
-        <p>
-        ${user.bio || "Aucune bio"}
-        </p>
-
+        <p>${user.bio || "Aucune bio"}</p>
     `;
 
     document.getElementById(
