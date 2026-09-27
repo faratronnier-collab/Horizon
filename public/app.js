@@ -119,7 +119,7 @@ async function loadPosts() {
 
 <img src= https://ui-avatars.com/api/?name=${post.username}&background=random>
 
-/profile.html?user=${post.username}
+<a href="/profile.html?user=${encodeURIComponent(post.username)}">
 
 <strong>
     ${post.username}
