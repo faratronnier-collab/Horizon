@@ -1,25 +1,25 @@
 const socket = io();
-socket.on(
-    "new-post",
-    () => {
 
-        loadPosts();
+socket.on("new-post", () => {
+    loadPosts();
+});
 
-    }
-);
 async function publish() {
 
     const username =
-localStorage.getItem("username");
+        localStorage.getItem("username");
+
     const content =
         document.getElementById("content").value;
 
-    if (!username || !content) {
+    if (!username) {
 
-        alert(
-            "Remplis le pseudo et le message"
-        );
+        alert("Connecte-toi d'abord");
+        return;
 
+    }
+
+    if (!content) {
         return;
     }
 
@@ -32,34 +32,13 @@ localStorage.getItem("username");
         },
 
         body: JSON.stringify({
-
             username,
             content
-
         })
 
     });
 
     document.getElementById("content").value = "";
-
-    const user =
-localStorage.getItem("username");
-
-if(user){
-
-    document.body.insertAdjacentHTML(
-        "afterbegin",
-
-        `
-        <p>
-        ✅ Connecté en tant que
-        <strong>${user}</strong>
-        </p>
-        `
-    );
-
-}
-    loadPosts();
 
 }
 
@@ -76,24 +55,39 @@ async function loadPosts() {
 
     feed.innerHTML = "";
 
-    posts.forEach(async post => {
-
     const currentUser =
         localStorage.getItem("username");
 
-    let adminButton = "";
+    let isAdmin = false;
 
-    if(currentUser){
+    if (currentUser) {
 
-        const adminCheck =
-            await fetch(
-                `/admin/${currentUser}`
-            );
+        try {
 
-        const adminData =
-            await adminCheck.json();
+            const adminCheck =
+                await fetch(
+                    `/admin/${currentUser}`
+                );
 
-        if(adminData?.is_admin){
+            const adminData =
+                await adminCheck.json();
+
+            isAdmin =
+                adminData?.is_admin === true;
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    }
+
+    for (const post of posts) {
+
+        let adminButton = "";
+
+        if (isAdmin) {
 
             adminButton = `
                 <button
@@ -103,51 +97,49 @@ async function loadPosts() {
             `;
         }
 
+        feed.innerHTML += `
+
+        <div class="post">
+
+            <strong>
+                ${post.username}
+            </strong>
+
+            <br>
+
+            ${post.content}
+
+            <br><br>
+
+            ${adminButton}
+
+        </div>
+
+        `;
+
     }
 
-    feed.innerHTML += `
-
-    <div class="post">
-
-        <strong>
-        ${post.username}
-        </strong>
-
-        <br>
-
-        ${post.content}
-
-        <br><br>
-
-        ${adminButton}
-
-    </div>
-
-    `;
-
-});
-
 }
-
-loadPosts();
 
 function logout() {
 
     localStorage.clear();
 
-    window.location.href = "/login.html";
+    window.location.href =
+        "/login.html";
 
 }
-async function deletePost(id){
+
+async function deletePost(id) {
 
     const username =
         localStorage.getItem("username");
 
-    await fetch(`/posts/${id}`,{
+    await fetch(`/posts/${id}`, {
 
-        method:"DELETE",
+        method: "DELETE",
 
-        headers:{
+        headers: {
             username
         }
 
@@ -156,3 +148,23 @@ async function deletePost(id){
     loadPosts();
 
 }
+
+const user =
+    localStorage.getItem("username");
+
+if (user) {
+
+    document.body.insertAdjacentHTML(
+        "afterbegin",
+
+        `
+        <p>
+        ✅ Connecté en tant que
+        <strong>${user}</strong>
+        </p>
+        `
+    );
+
+}
+
+loadPosts();
