@@ -61,9 +61,22 @@ password
 const data =
 await response.json();
 
-alert(
-JSON.stringify(data)
-);
+if(data.success){
+
+    alert(
+        "Compte créé !"
+    );
+
+    window.location.href =
+        "/login.html";
+
+}else{
+
+    alert(
+        data.error
+    );
+
+}
 
 }
 
