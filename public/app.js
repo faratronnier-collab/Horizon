@@ -1,3 +1,11 @@
+if(
+    !localStorage.getItem("token")
+){
+
+    window.location.href =
+        "/login.html";
+
+}
 const socket = io();
 
 socket.on("connect", () => {
