@@ -115,8 +115,6 @@ async function loadPosts() {
 
 </div>
 
-<p>${post.content}</p>
-
 </div>
             <br>
 
