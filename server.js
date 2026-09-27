@@ -280,18 +280,18 @@ app.post("/login", async (req, res) => {
 
 });
 
-app.get("/profile/:username", async (req,res)=>{
+app.get("/profile/:username", async (req, res) => {
 
     try {
 
-        const result =
+        const user =
             await db.query(
                 `
                 SELECT
-                id,
-                username,
-                bio,
-                created_at
+                    username,
+                    bio,
+                    avatar,
+                    created_at
                 FROM users
                 WHERE username = $1
                 `,
@@ -300,9 +300,28 @@ app.get("/profile/:username", async (req,res)=>{
                 ]
             );
 
-        res.json(
-            result.rows[0]
-        );
+        const posts =
+            await db.query(
+                `
+                SELECT *
+                FROM posts
+                WHERE username = $1
+                ORDER BY created_at DESC
+                `,
+                [
+                    req.params.username
+                ]
+            );
+
+        res.json({
+
+            user :
+            user.rows[0],
+
+            posts :
+            posts.rows
+
+        });
 
     } catch(error){
 
