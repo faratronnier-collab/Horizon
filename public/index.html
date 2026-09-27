@@ -2,41 +2,52 @@
 <html>
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Horizon</title>
-<button onclick="logout()">
-Déconnexion
-</button>
+
+<link rel="stylesheet" href="style.css">
 
 </head>
 
-<div class="login-container"></div>
 <body>
 
-<h1>🌅 Horizon</h1>
-<p id="welcome"></p>
+<div class="container">
 
-<br><br>
+    <div class="topbar">
 
-<textarea
-id="content"
-placeholder="Écris quelque chose...">
-</textarea>
+        <h1>🌅 Horizon</h1>
 
-<br><br>
+        <button onclick="logout()">
+            Déconnexion
+        </button>
 
-<button onclick="publish()">
-Publier
-</button>
+    </div>
 
-<hr>
+    <p id="welcome"></p>
 
-<div id="feed"></div>
+    <div class="create-post">
 
-<script src="/socket.io/socket.io.js" ></script>
-<script src="app.js?v=5"></script>
+        <textarea
+            id="content"
+            placeholder="Exprime toi sur Horizon...">
+        </textarea>
+
+        <button onclick="publish()">
+            Publier
+        </button>
+
+    </div>
+
+    <div id="feed"></div>
+
+</div>
+
+/socket.io/socket.io.jsscript>
+app.js?v=20script>
 
 </body>
-<div>
+
 </html>
