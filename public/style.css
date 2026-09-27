@@ -120,3 +120,24 @@ input{
     }
 
 }
+.user-line{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:10px;
+
+}
+
+.user-line img{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+}
