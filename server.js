@@ -301,6 +301,85 @@ app.get("/profile/:username", async (req,res)=>{
     }
 
 });
+
+app.get("/admin/:username", async (req, res) => {
+
+    try {
+
+        const result = await db.query(
+            `
+            SELECT is_admin
+            FROM users
+            WHERE username = $1
+            `,
+            [req.params.username]
+        );
+
+        res.json(result.rows[0]);
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            error: "Erreur serveur"
+        });
+
+    }
+
+});
+
+app.delete("/posts/:id", async (req, res) => {
+
+    try {
+
+        const username =
+            req.headers.username;
+
+        const admin =
+            await db.query(
+                `
+                SELECT is_admin
+                FROM users
+                WHERE username = $1
+                `,
+                [username]
+            );
+
+        if(
+            !admin.rows[0] ||
+            !admin.rows[0].is_admin
+        ){
+
+            return res.status(403).json({
+                error:"Accès refusé"
+            });
+
+        }
+
+        await db.query(
+            `
+            DELETE FROM posts
+            WHERE id = $1
+            `,
+            [req.params.id]
+        );
+
+        res.json({
+            success:true
+        });
+
+    } catch(error){
+
+        console.error(error);
+
+        res.status(500).json({
+            error:"Erreur serveur"
+        });
+
+    }
+
+});
 app.listen(PORT, () => {
 
     console.log(

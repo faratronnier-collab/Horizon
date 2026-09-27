@@ -67,25 +67,56 @@ async function loadPosts() {
 
     feed.innerHTML = "";
 
-    posts.forEach(post => {
+    posts.forEach(async post => {
 
-        feed.innerHTML += `
+    const currentUser =
+        localStorage.getItem("username");
 
-        <div class="post">
+    let adminButton = "";
 
-            <strong>
-                ${post.username || "Anonyme"}
-            </strong>
+    if(currentUser){
 
-            <br>
+        const adminCheck =
+            await fetch(
+                `/admin/${currentUser}`
+            );
 
-            ${post.content}
+        const adminData =
+            await adminCheck.json();
 
-        </div>
+        if(adminData?.is_admin){
 
-        `;
+            adminButton = `
+                <button
+                onclick="deletePost(${post.id})">
+                🗑️ Supprimer
+                </button>
+            `;
+        }
 
-    });
+    }
+
+    feed.innerHTML += `
+
+    <div class="post">
+
+        <strong>
+        ${post.username}
+        </strong>
+
+        <br>
+
+        ${post.content}
+
+        <br><br>
+
+        ${adminButton}
+
+    </div>
+
+    `;
+
+});
 
 }
 
@@ -96,5 +127,23 @@ function logout() {
     localStorage.clear();
 
     window.location.href = "/login.html";
+
+}
+async function deletePost(id){
+
+    const username =
+        localStorage.getItem("username");
+
+    await fetch(`/posts/${id}`,{
+
+        method:"DELETE",
+
+        headers:{
+            username
+        }
+
+    });
+
+    loadPosts();
 
 }
