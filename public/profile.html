@@ -50,34 +50,59 @@ async function loadProfile(){
             "username"
         );
 
-    const response =
-        await fetch(
-            `/profile/${username}`
-        );
+    if (!username) {
+        document.getElementById("profile").textContent =
+            "Utilisateur non connecté.";
+        return;
+    }
 
-    const user =
-        await response.json();
+    try {
+        const response =
+            await fetch(
+                `/profile/${encodeURIComponent(username)}`
+            );
 
-    const avatarUrl =
-        user.avatar && user.avatar.trim() !== ""
-            ? user.avatar
-            : `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || "Utilisateur")}&background=random`;
+        if (!response.ok) {
+            throw new Error("Impossible de charger le profil");
+        }
 
-    document.getElementById("profile").innerHTML = `
-        <img src="${avatarUrl}" alt="${user.username || "Utilisateur"}">
-        <h2>${user.username}</h2>
-        <p>${user.bio || "Aucune bio"}</p>
-    `;
+        const user =
+            await response.json();
 
-    document.getElementById(
-        "bio"
-    ).value =
-    user.bio || "";
+        const avatarUrl =
+            user.avatar && user.avatar.trim() !== ""
+                ? user.avatar
+                : `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || "Utilisateur")}&background=random`;
 
-    document.getElementById(
-        "avatar"
-    ).value =
-    user.avatar || "";
+        const profile = document.getElementById("profile");
+        profile.replaceChildren();
+
+        const image = document.createElement("img");
+        image.src = avatarUrl;
+        image.alt = user.username || "Utilisateur";
+
+        const heading = document.createElement("h2");
+        heading.textContent = user.username || "Utilisateur";
+
+        const bio = document.createElement("p");
+        bio.textContent = user.bio || "Aucune bio";
+
+        profile.append(image, heading, bio);
+
+        document.getElementById(
+            "bio"
+        ).value =
+        user.bio || "";
+
+        document.getElementById(
+            "avatar"
+        ).value =
+        user.avatar || "";
+    } catch (error) {
+        document.getElementById("profile").textContent =
+            "Erreur lors du chargement du profil.";
+        console.error(error);
+    }
 
 }
 
