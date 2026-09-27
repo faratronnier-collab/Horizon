@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mon Profil</title>
+<title>Profil Horizon</title>
 
 <link rel="stylesheet" href="/style.css">
 
@@ -16,9 +16,28 @@
 
 <div class="container">
 
-    <h1>👤 Mon Profil</h1>
+<h1>👤 Mon Profil</h1>
 
-    <div id="profile"></div>
+<div id="profile"></div>
+
+<h2>Modifier mon profil</h2>
+
+<input
+id="avatar"
+placeholder="URL de l'image">
+
+<br><br>
+
+<textarea
+id="bio"
+placeholder="Ta bio">
+</textarea>
+
+<br><br>
+
+<button onclick="saveProfile()">
+Enregistrer
+</button>
 
 </div>
 
@@ -57,6 +76,55 @@ async function loadProfile(){
         </p>
 
     `;
+
+    document.getElementById(
+        "bio"
+    ).value =
+    user.bio || "";
+
+    document.getElementById(
+        "avatar"
+    ).value =
+    user.avatar || "";
+
+}
+
+async function saveProfile(){
+
+    await fetch(
+        "/profile",
+        {
+
+            method:"PUT",
+
+            headers:{
+                "Content-Type":
+                "application/json"
+            },
+
+            body:JSON.stringify({
+
+                username:
+                localStorage.getItem(
+                    "username"
+                ),
+
+                bio:
+                document.getElementById(
+                    "bio"
+                ).value,
+
+                avatar:
+                document.getElementById(
+                    "avatar"
+                ).value
+
+            })
+
+        }
+    );
+
+    loadProfile();
 
 }
 

@@ -177,3 +177,27 @@ button:hover{
     margin:auto;
 
 }
+
+.avatar-large{
+
+    width:140px;
+
+    height:140px;
+
+    border-radius:50%;
+
+    display:block;
+
+    margin:auto;
+
+    margin-bottom:20px;
+
+}
+
+#profile{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}

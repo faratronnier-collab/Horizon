@@ -394,6 +394,47 @@ app.delete("/posts/:id", async (req, res) => {
     }
 
 });
+
+app.put("/profile", async (req, res) => {
+
+    try {
+
+        const {
+            username,
+            bio,
+            avatar
+        } = req.body;
+
+        await db.query(
+            `
+            UPDATE users
+            SET
+                bio = $1,
+                avatar = $2
+            WHERE username = $3
+            `,
+            [
+                bio,
+                avatar,
+                username
+            ]
+        );
+
+        res.json({
+            success:true
+        });
+
+    } catch(error){
+
+        console.error(error);
+
+        res.status(500).json({
+            error:"Erreur serveur"
+        });
+
+    }
+
+});
 server.listen(PORT, () => {
 
     console.log(
