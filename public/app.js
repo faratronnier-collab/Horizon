@@ -107,10 +107,15 @@ async function loadPosts() {
 
         <div class="post">
 
-            <strong>
-                ${post.username}
-            </strong>
+            <div class="user-line">
 
+https://ui-avatars.com/api/?name=${post.username}&background=random
+
+<strong>
+${post.username}
+</strong>
+
+</div>
             <br>
 
             ${post.content}
@@ -174,3 +179,17 @@ if (user) {
 }
 
 loadPosts();
+
+const currentUser =
+localStorage.getItem("username");
+
+if(currentUser){
+
+    document.getElementById(
+        "welcome"
+    ).innerHTML =
+
+    `✅ Connecté en tant que
+    <strong>${currentUser}</strong>`;
+
+}
