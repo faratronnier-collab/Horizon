@@ -58,15 +58,17 @@ async function loadProfile(){
     const user =
         await response.json();
 
+    const avatarUrl =
+        user.avatar ||
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || "Utilisateur")}&background=random`;
+
     document.getElementById(
         "profile"
     ).innerHTML = `
 
         <img
-        src="${
-            user.avatar ||
-            `https://ui-avatars.com/api/?name=${user.username}&background=random`
-        }"
+        src="${avatarUrl}"
+        alt="${(user.username || "Utilisateur").replace(/"/g, "&quot;")}"
         class="avatar-large">
 
         <h2>${user.username}</h2>
