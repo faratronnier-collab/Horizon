@@ -44,70 +44,47 @@ Enregistrer
 
 async function loadProfile(){
 
-    const params =
-new URLSearchParams(
-window.location.search
-);
+    const username =
+        localStorage.getItem(
+            "username"
+        );
 
-const username =
-params.get("user")
-||
-localStorage.getItem(
-"username"
-);
     const response =
         await fetch(
             `/profile/${username}`
         );
 
-    const profile =
+    const user =
         await response.json();
-        console.log(profile.avatar);
+        console.log(user.avatar);
     document.getElementById(
         "profile"
     ).innerHTML = `
 
         <img
         src="${
-            profile.avatar ||
-            `https://ui-avatars.com/api/?name=${profile.username}&background=random`
+            user.avatar ||
+            `https://ui-avatars.com/api/?name=${user.username}&background=random`
         }"
         class="avatar-large">
 
-        <h2>${profile.username}</h2>
+        <h2>${user.username}</h2>
 
         <p>
-        ${profile.bio || "Aucune bio"}
+        ${user.bio || "Aucune bio"}
         </p>
-        <p>
-
-📝 Publications :
-
-${posts.length}
-
-</p>
-
-<hr>
-
-${posts.map(post => `
-<div class="post">
-
-${post.content}
-
-</div>
-`).join("")}
 
     `;
 
     document.getElementById(
         "bio"
     ).value =
-    profile.bio || "";
+    user.bio || "";
 
     document.getElementById(
         "avatar"
     ).value =
-    profile.avatar || "";
+    user.avatar || "";
 
 }
 
