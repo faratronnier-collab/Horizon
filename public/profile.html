@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mon Profil</title>
+
+<link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>👤 Mon Profil</h1>
+
+    <div id="profile"></div>
+
+</div>
+
+<script>
+
+async function loadProfile(){
+
+    const username =
+        localStorage.getItem(
+            "username"
+        );
+
+    const response =
+        await fetch(
+            `/profile/${username}`
+        );
+
+    const user =
+        await response.json();
+
+    document.getElementById(
+        "profile"
+    ).innerHTML = `
+
+        <img
+        src="${
+            user.avatar ||
+            `https://ui-avatars.com/api/?name=${user.username}&background=random`
+        }"
+        class="avatar-large">
+
+        <h2>${user.username}</h2>
+
+        <p>
+        ${user.bio || "Aucune bio"}
+        </p>
+
+    `;
+
+}
+
+loadProfile();
+
+</script>
+
+</body>
+
+</html>
