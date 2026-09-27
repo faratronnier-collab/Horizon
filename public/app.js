@@ -111,9 +111,15 @@ async function loadPosts() {
 
 https://ui-avatars.com/api/?name=${post.username}&background=random
 
+<div class="user-line">
+
+https://ui-avatars.com/api/?name=${post.username}&background=random
+
 <strong>
 ${post.username}
 </strong>
+
+</div>
 
 </div>
             <br>
@@ -160,23 +166,6 @@ async function deletePost(id) {
 
 }
 
-const user =
-    localStorage.getItem("username");
-
-if (user) {
-
-    document.body.insertAdjacentHTML(
-        "afterbegin",
-
-        `
-        <p>
-        ✅ Connecté en tant que
-        <strong>${user}</strong>
-        </p>
-        `
-    );
-
-}
 
 loadPosts();
 
