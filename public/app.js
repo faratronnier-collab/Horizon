@@ -1,3 +1,12 @@
+const socket = io();
+socket.on(
+    "new-post",
+    () => {
+
+        loadPosts();
+
+    }
+);
 async function publish() {
 
     const username =

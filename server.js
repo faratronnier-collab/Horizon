@@ -3,8 +3,18 @@ import cors from "cors";
 import db from "./db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 const app = express();
+
+const server = createServer(app);
+
+const io = new Server(server,{
+    cors:{
+        origin:"*"
+    }
+});
 const SECRET = "HORIZON_SECRET_2026";
 
 app.use(cors());
@@ -129,6 +139,10 @@ app.post("/posts", async (req, res) => {
         );
 
         res.json(result.rows[0]);
+        io.emit(
+    "new-post",
+    result.rows[0]
+);
 
     } catch (error) {
 
@@ -380,10 +394,10 @@ app.delete("/posts/:id", async (req, res) => {
     }
 
 });
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 
     console.log(
-        `🌅 Horizon lancé sur le port ${PORT}`
+        `🌅 Horizon sur ${PORT}`
     );
 
 });
