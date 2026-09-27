@@ -107,11 +107,7 @@ async function loadPosts() {
 
         <div class="post">
 
-            <div class="user-line">
-
-https://ui-avatars.com/api/?name=${post.username}&background=random
-
-<div class="user-line">
+        <div class="user-line">
 
 https://ui-avatars.com/api/?name=${post.username}&background=random
 
