@@ -109,7 +109,7 @@ async function loadPosts() {
 
         <div class="user-line">
 
-https://ui-avatars.com/api/?name=${post.username}&background=random
+<imghttps://ui-avatars.com/api/?name=${post.username}&background=random>
 
 <strong>${post.username}</strong>
 
