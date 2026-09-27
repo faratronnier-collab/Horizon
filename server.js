@@ -143,10 +143,12 @@ app.post("/posts", async (req, res) => {
    LANCEMENT
 ========================= */
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
 
     console.log(
-        "🌅 Horizon lancé sur http://localhost:3000"
+        `🌅 Horizon lancé sur le port ${PORT}`
     );
 
 });
