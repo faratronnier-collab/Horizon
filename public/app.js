@@ -1,8 +1,7 @@
 async function publish() {
 
     const username =
-        document.getElementById("username").value;
-
+localStorage.getItem("username");
     const content =
         document.getElementById("content").value;
 
@@ -34,6 +33,23 @@ async function publish() {
 
     document.getElementById("content").value = "";
 
+    const user =
+localStorage.getItem("username");
+
+if(user){
+
+    document.body.insertAdjacentHTML(
+        "afterbegin",
+
+        `
+        <p>
+        ✅ Connecté en tant que
+        <strong>${user}</strong>
+        </p>
+        `
+    );
+
+}
     loadPosts();
 
 }
@@ -74,3 +90,12 @@ async function loadPosts() {
 }
 
 loadPosts();
+
+function logout(){
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+
+    location.reload();
+
+}
