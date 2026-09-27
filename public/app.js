@@ -91,10 +91,9 @@ async function loadPosts() {
 
 loadPosts();
 
-function logout(){
+function logout() {
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.clear();
 
     window.location.href = "/login.html";
 
