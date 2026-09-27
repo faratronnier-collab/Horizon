@@ -1,8 +1,11 @@
 import express from "express";
 import cors from "cors";
 import db from "./db.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const app = express();
+const SECRET = "HORIZON_SECRET_2026";
 
 app.use(cors());
 app.use(express.json());
@@ -145,6 +148,159 @@ app.post("/posts", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
+app.post("/register", async (req, res) => {
+
+    try {
+
+        const {
+            username,
+            email,
+            password
+        } = req.body;
+
+        const hash =
+            await bcrypt.hash(password, 10);
+
+        const result =
+            await db.query(
+                `
+                INSERT INTO users
+                (
+                    username,
+                    email,
+                    password
+                )
+                VALUES($1,$2,$3)
+                RETURNING id, username
+                `,
+                [
+                    username,
+                    email,
+                    hash
+                ]
+            );
+
+        res.json({
+            success: true,
+            user: result.rows[0]
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(400).json({
+            error: "Impossible de créer le compte"
+        });
+
+    }
+
+});
+
+app.post("/login", async (req, res) => {
+
+    try {
+
+        const {
+            email,
+            password
+        } = req.body;
+
+        const result =
+            await db.query(
+                `
+                SELECT *
+                FROM users
+                WHERE email = $1
+                `,
+                [email]
+            );
+
+        const user =
+            result.rows[0];
+
+        if (!user) {
+
+            return res.status(401).json({
+                error: "Utilisateur introuvable"
+            });
+
+        }
+
+        const valid =
+            await bcrypt.compare(
+                password,
+                user.password
+            );
+
+        if (!valid) {
+
+            return res.status(401).json({
+                error: "Mot de passe incorrect"
+            });
+
+        }
+
+        const token =
+            jwt.sign(
+                {
+                    id: user.id
+                },
+                SECRET
+            );
+
+        res.json({
+            token,
+            username: user.username
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            error: "Erreur serveur"
+        });
+
+    }
+
+});
+
+app.get("/profile/:username", async (req,res)=>{
+
+    try {
+
+        const result =
+            await db.query(
+                `
+                SELECT
+                id,
+                username,
+                bio,
+                created_at
+                FROM users
+                WHERE username = $1
+                `,
+                [
+                    req.params.username
+                ]
+            );
+
+        res.json(
+            result.rows[0]
+        );
+
+    } catch(error){
+
+        console.error(error);
+
+        res.status(500).json({
+            error:"Erreur serveur"
+        });
+
+    }
+
+});
 app.listen(PORT, () => {
 
     console.log(
