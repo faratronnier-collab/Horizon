@@ -59,22 +59,46 @@ password
 });
 
 const data =
-await response.json();
+    await response.json();
 
 if(data.success){
 
-    alert(
-        "Compte créé !"
+    const loginResponse =
+        await fetch("/login",{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+
+                email,
+                password
+
+            })
+
+        });
+
+    const loginData =
+        await loginResponse.json();
+
+    localStorage.setItem(
+        "token",
+        loginData.token
     );
 
-    window.location.href =
-        "/login.html";
+    localStorage.setItem(
+        "username",
+        loginData.username
+    );
+
+    window.location.href = "/";
 
 }else{
 
-    alert(
-        data.error
-    );
+    alert(data.error);
 
 }
 

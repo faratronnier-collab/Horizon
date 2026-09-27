@@ -56,23 +56,25 @@ async function login(){
 
     if(data.token){
 
-        localStorage.setItem(
-            "token",
-            data.token
-        );
+    localStorage.setItem(
+        "token",
+        data.token
+    );
 
-        localStorage.setItem(
-            "username",
-            data.username
-        );
+    localStorage.setItem(
+        "username",
+        data.username
+    );
 
-        alert("Connexion réussie");
+    window.location.href = "/";
 
-    }else{
+}else{
 
-        alert(data.error);
+    alert(
+        data.error
+    );
 
-    }
+}
 
 }
 
