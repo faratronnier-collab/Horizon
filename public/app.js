@@ -1,6 +1,12 @@
 const socket = io();
 
-socket.on("new-post", () => {
+socket.on("connect", () => {
+    console.log("✅ Socket connecté");
+});
+
+socket.on("new-post", (post) => {
+    console.log("✅ Nouveau post reçu", post);
+
     loadPosts();
 });
 
