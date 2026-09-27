@@ -147,3 +147,4 @@ async function deletePost(id){
     loadPosts();
 
 }
+setInterval(loadPosts, 3000);
