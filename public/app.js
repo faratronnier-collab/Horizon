@@ -157,7 +157,7 @@ if(post.username === "TON_AUTRE_COMPTE"){
 
         <div class="user-line">
 
-<img src= https://ui-avatars.com/api/?name=${post.username}&background=random>
+<img src="/logo.png" class="logo">
 
 <a href="/profile.html?user=${encodeURIComponent(post.username)}">
 

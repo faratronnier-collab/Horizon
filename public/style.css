@@ -354,3 +354,35 @@ button:hover{
     font-weight:bold;
 
 }
+
+.logo{
+
+    width:70px;
+
+    height:70px;
+
+}
+
+.logo-login{
+
+    width:120px;
+
+    display:block;
+
+    margin:auto;
+
+    margin-bottom:20px;
+
+}
+
+.logo-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:15px;
+
+}
