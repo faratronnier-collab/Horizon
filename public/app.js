@@ -110,10 +110,22 @@ async function loadPosts() {
                 </button>
             `;
         }
+let postClass = "post";
 
+if(post.username === "administrateur"){
+
+    postClass = "post admin-post";
+
+}
+
+if(post.username === "TON_AUTRE_COMPTE"){
+
+    postClass = "post vip-post";
+
+}
         feed.innerHTML += `
 
-        <div class="post">
+        <div class="${postClass}">
 
         <div class="user-line">
 

@@ -237,3 +237,49 @@ button:hover{
     width:100%;
 
 }
+
+.admin-post{
+
+    background: linear-gradient(
+        90deg,
+        red,
+        orange,
+        yellow,
+        green,
+        cyan,
+        blue,
+        violet
+    );
+
+    background-size: 400% 400%;
+
+    animation: rainbowMove 5s linear infinite;
+
+    color:white;
+
+}
+
+.vip-post{
+
+    background: linear-gradient(
+        135deg,
+        #ffd700,
+        #fff2a8,
+        #ffd700
+    );
+
+    box-shadow:0 0 20px rgba(255,215,0,.5);
+
+}
+
+@keyframes rainbowMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    100%{
+        background-position:100% 50%;
+    }
+
+}
