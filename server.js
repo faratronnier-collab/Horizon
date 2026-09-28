@@ -479,6 +479,57 @@ app.get("/special-users", async (req, res) => {
     }
 
 });
+
+app.post("/system-message", async (req, res) => {
+
+    try {
+
+        const { content } = req.body;
+
+        await db.query(
+            `
+            INSERT INTO system_messages
+            (content)
+            VALUES ($1)
+            `,
+            [content]
+        );
+
+        io.emit(
+            "new-system-message",
+            content
+        );
+
+        res.json({
+            success: true
+        });
+
+    } catch(error){
+
+        console.error(error);
+
+        res.status(500).json({
+            error: "Erreur serveur"
+        });
+
+    }
+
+});
+
+app.get("/system-message", async (req, res) => {
+
+    const result = await db.query(
+        `
+        SELECT *
+        FROM system_messages
+        ORDER BY created_at DESC
+        LIMIT 50
+        `
+    );
+
+    res.json(result.rows);
+
+});
 server.listen(PORT, () => {
 
     console.log(

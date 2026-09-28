@@ -45,6 +45,30 @@ async function login() {
     if (data.token) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
+        if(data.username === "administrateur"){
+
+    await fetch(
+        "/system-message",
+        {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":
+                "application/json"
+            },
+
+            body:JSON.stringify({
+
+                content:
+                "🟢 administrateur est connecté"
+
+            })
+
+        }
+    );
+
+}
         window.location.href = "/";
     } else {
         alert(data.error || "Email ou mot de passe incorrect");

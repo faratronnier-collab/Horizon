@@ -332,3 +332,17 @@ button:hover{
     letter-spacing:8px;
 
 }
+
+.system-post{
+
+    text-align:center;
+
+    color:#666;
+
+    font-style:italic;
+
+    margin:10px 0;
+
+    font-size:14px;
+
+}

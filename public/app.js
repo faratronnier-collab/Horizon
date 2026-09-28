@@ -63,11 +63,29 @@ async function loadPosts() {
 
     const posts =
         await response.json();
+        const systemResponse =
+    await fetch("/system-message");
+
+const systemMessages =
+    await systemResponse.json();
 
     const feed =
         document.getElementById("feed");
 
     feed.innerHTML = "";
+    systemMessages.forEach(message => {
+
+    feed.innerHTML += `
+
+    <div class="system-post">
+
+        ${message.content}
+
+    </div>
+
+    `;
+
+});
 
     const currentUser =
         localStorage.getItem("username");
@@ -167,7 +185,34 @@ if(post.username === "TON_AUTRE_COMPTE"){
 function logout() {
 
     localStorage.clear();
+if(
+    localStorage.getItem(
+        "username"
+    ) === "administrateur"
+){
 
+    fetch(
+        "/system-message",
+        {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":
+                "application/json"
+            },
+
+            body:JSON.stringify({
+
+                content:
+                "🔴 administrateur s'est déconnecté"
+
+            })
+
+        }
+    );
+
+}
     window.location.href =
         "/login.html";
 
