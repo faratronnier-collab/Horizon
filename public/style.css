@@ -300,4 +300,35 @@ button:hover{
             .6
         );
 
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.vip-post::after{
+
+    content:"DEV";
+
+    position:absolute;
+
+    top:50%;
+
+    left:50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    font-size:60px;
+
+    font-weight:900;
+
+    opacity:0.12;
+
+    color:white;
+
+    pointer-events:none;
+
+    letter-spacing:8px;
+
 }
