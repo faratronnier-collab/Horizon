@@ -72,20 +72,24 @@ const systemMessages =
     const feed =
         document.getElementById("feed");
 
-    feed.innerHTML = "";
-    systemMessages.forEach(message => {
+    for (const message of systemMessages) {
 
-    feed.innerHTML += `
+        const isDisconnect =
+            message.content.includes("déconnecté");
 
-    <div class="system-post">
+        feed.innerHTML += `
+
+        <div class="system-post ${
+            isDisconnect ? "system-disconnect" : ""
+        }">
 
         ${message.content}
 
-    </div>
+        </div>
 
-    `;
+        `;
 
-});
+    }
 
     const currentUser =
         localStorage.getItem("username");

@@ -346,3 +346,11 @@ button:hover{
     font-size:14px;
 
 }
+
+.system-disconnect{
+
+    color:red;
+
+    font-weight:bold;
+
+}
