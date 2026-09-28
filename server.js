@@ -454,6 +454,31 @@ app.put("/profile", async (req, res) => {
     }
 
 });
+
+app.get("/special-users", async (req, res) => {
+
+    try {
+
+        const result = await db.query(
+            `
+            SELECT *
+            FROM special_users
+            `
+        );
+
+        res.json(result.rows);
+
+    } catch(error){
+
+        console.error(error);
+
+        res.status(500).json({
+            error:"Erreur serveur"
+        });
+
+    }
+
+});
 server.listen(PORT, () => {
 
     console.log(

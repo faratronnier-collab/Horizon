@@ -283,3 +283,21 @@ button:hover{
     }
 
 }
+.vip-post{
+
+    background: linear-gradient(
+        135deg,
+        #ffd700,
+        #fff0a0,
+        #ffd700
+    );
+
+    box-shadow:
+        0 0 20px rgba(
+            255,
+            215,
+            0,
+            .6
+        );
+
+}
