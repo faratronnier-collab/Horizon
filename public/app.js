@@ -112,6 +112,12 @@ async function loadPosts() {
         }
 let postClass = "post";
 
+if(post.username === "fara"){
+
+    postClass = "post vip-post";
+
+}
+
 if(post.username === "administrateur"){
 
     postClass = "post admin-post";
