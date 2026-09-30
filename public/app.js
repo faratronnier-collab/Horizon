@@ -134,52 +134,16 @@ const systemMessages =
         }
 let postClass = "post";
 
-if(post.username === "fara"){
-
-    postClass = "post vip-post";
-
-}
-
-if(post.username === "administrateur"){
-
-    postClass = "post admin-post";
-
-}
-
-if(post.username === "TON_AUTRE_COMPTE"){
-
-    postClass = "post vip-post";
-
-}
         feed.innerHTML += `
-
-        <div class="${postClass}">
-
-        <div class="user-line">
-
-<img src="/logo.png" class="logo">
-
-<a href="/profile.html?user=${encodeURIComponent(post.username)}">
-
-<strong>
-    ${post.username}
-</strong>
-
-</a>
-
-</div>
-
-</div>
-            <br>
-
-            ${post.content}
-
-            <br><br>
-
-            ${adminButton}
-
-        </div>
-
+            <div class="${postClass}">
+                <a href="/profile.html?user=${encodeURIComponent(post.username)}">
+                    <strong>${post.username}</strong>
+                </a>
+                <br>
+                ${post.content}
+                <br><br>
+                ${adminButton}
+            </div>
         `;
 
     }
