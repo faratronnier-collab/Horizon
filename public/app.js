@@ -150,42 +150,6 @@ let postClass = "post";
 
 }
 
-function logout() {
-
-    localStorage.clear();
-if(
-    localStorage.getItem(
-        "username"
-    ) === "administrateur"
-){
-
-    fetch(
-        "/system-message",
-        {
-
-            method:"POST",
-
-            headers:{
-                "Content-Type":
-                "application/json"
-            },
-
-            body:JSON.stringify({
-
-                content:
-                "🔴 administrateur s'est déconnecté"
-
-            })
-
-        }
-    );
-
-}
-    window.location.href =
-        "/login.html";
-
-}
-
 async function deletePost(id) {
 
     const username =
